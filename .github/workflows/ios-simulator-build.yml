@@ -14,7 +14,7 @@ jobs:
 
     steps:
       - name: Check out source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Show Xcode and simulator environment
         run: |
@@ -84,7 +84,7 @@ jobs:
             clean build
 
       - name: Upload simulator app artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: BushkillLawnTracker-simulator-app
           path: DerivedData/Build/Products/Debug-iphonesimulator/BushkillLawnTracker.app
