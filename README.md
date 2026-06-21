@@ -20,6 +20,8 @@ GitHub repository target: `https://github.com/NikitaNesterov1/Lawntracker-.git`
 
 This repository includes a GitHub Actions workflow at `.github/workflows/ios-simulator-build.yml`. Run `iOS Simulator Build` from the Actions tab to build the app on a hosted macOS runner.
 
+To preview the UI from Windows, run `iOS Screenshot Preview` from the Actions tab. It launches the app on a hosted iOS Simulator, captures one screenshot per tab, and uploads the PNG files as an artifact.
+
 See `docs/NO_MAC_BUILD_PLAN.md` for the full Windows-to-cloud build path.
 See `docs/PUSH_TO_GITHUB.md` for repo-specific upload steps.
 See `docs/LAWN_INTELLIGENCE.md` for the location and weather feature notes.

@@ -1,0 +1,101 @@
+name: iOS Screenshot Preview
+
+on:
+  workflow_dispatch:
+
+jobs:
+  screenshots:
+    name: Capture app screenshots
+    runs-on: macos-26
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Select newest available iOS simulator
+        id: simulator
+        run: |
+          set -euo pipefail
+          devices_json="$(mktemp)"
+          xcrun simctl list devices available --json > "$devices_json"
+
+          selection="$(python3 - "$devices_json" <<'PY'
+          import json
+          import re
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              data = json.load(handle)
+
+          candidates = []
+          for runtime_id, devices in data.get("devices", {}).items():
+              if ".iOS-" not in runtime_id:
+                  continue
+
+              match = re.search(r"iOS-(\d+)-(\d+)(?:-(\d+))?", runtime_id)
+              if not match:
+                  continue
+
+              version = tuple(int(part or 0) for part in match.groups())
+              for device in devices:
+                  name = device.get("name", "")
+                  if device.get("isAvailable") and name.startswith("iPhone"):
+                      candidates.append((version, name, device["udid"]))
+
+          if not candidates:
+              raise SystemExit("No available iOS simulator was found.")
+
+          def score(candidate):
+              version, name, _ = candidate
+              preferred_size = 2 if "Pro Max" in name else 1 if "Pro" in name else 0
+              return (version, preferred_size, name)
+
+          version, name, udid = max(candidates, key=score)
+          print(f"{udid}|platform=iOS Simulator,id={udid}|{name}|{'.'.join(map(str, version)).rstrip('.0')}")
+          PY
+          )"
+
+          IFS="|" read -r udid destination name version <<< "$selection"
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
+          echo "destination=$destination" >> "$GITHUB_OUTPUT"
+          echo "name=$name" >> "$GITHUB_OUTPUT"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "Selected $name on iOS $version"
+
+      - name: Build app
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project BushkillLawnTracker.xcodeproj \
+            -scheme BushkillLawnTracker \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination "${{ steps.simulator.outputs.destination }}" \
+            -derivedDataPath DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            clean build
+
+      - name: Boot simulator and install app
+        run: |
+          set -euo pipefail
+          xcrun simctl boot "${{ steps.simulator.outputs.udid }}" || true
+          xcrun simctl bootstatus "${{ steps.simulator.outputs.udid }}" -b
+          xcrun simctl install "${{ steps.simulator.outputs.udid }}" DerivedData/Build/Products/Debug-iphonesimulator/BushkillLawnTracker.app
+
+      - name: Capture tab screenshots
+        run: |
+          set -euo pipefail
+          mkdir -p Screenshots
+          tabs=(dashboard info rain water work plan plants)
+          for tab in "${tabs[@]}"; do
+            SIMCTL_CHILD_PREVIEW_TAB="$tab" xcrun simctl launch --terminate-running-process "${{ steps.simulator.outputs.udid }}" com.bushkill.BushkillLawnTracker
+            sleep 4
+            xcrun simctl io "${{ steps.simulator.outputs.udid }}" screenshot "Screenshots/${tab}.png"
+          done
+
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v7
+        with:
+          name: BushkillLawnTracker-screenshots
+          path: Screenshots/*.png
+          if-no-files-found: error
