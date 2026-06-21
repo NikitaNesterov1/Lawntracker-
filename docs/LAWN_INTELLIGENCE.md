@@ -28,7 +28,7 @@ The weather request includes:
 
 - Current temperature, humidity, precipitation, rain, weather code, and wind speed
 - Recent daily precipitation estimates using `past_days=7`
-- Next 7 days forecast precipitation
+- Next 14 days forecast precipitation
 - Daily ET0 reference evapotranspiration
 - Daily high and low temperature
 - Daily precipitation probability
@@ -45,7 +45,7 @@ Users can either:
 The first version uses weather and lawn facts to show:
 
 - Past 7 days rainfall
-- Next 7 days rainfall forecast
+- Next 14 days rainfall forecast
 - Recent evapotranspiration estimate
 - Basic moisture balance
 - Watering guidance using the existing lawn recommendation logic
@@ -57,7 +57,7 @@ The app keeps separate rainfall sources so totals are easier to trust:
 - Logged rain: user-entered rainfall for the last 7 calendar days, including today
 - Week-to-date rain: user-entered rainfall from the current calendar week
 - Weather estimate: Open-Meteo's previous 7 completed daily rainfall totals
-- Rainfall prediction: Open-Meteo's forecast for today plus the next 6 days
+- Rainfall prediction: Open-Meteo's forecast for today plus the next 13 days, with days 8-14 split out
 
 When generating lawn guidance, the app uses logged rainfall first. If the user has not logged rain for the period, it falls back to the weather estimate.
 

@@ -146,7 +146,7 @@ struct LawnIntelligenceView: View {
                     dailyRows(snapshot.recentDays)
                 }
 
-                DisclosureGroup("Forecast daily totals") {
+                DisclosureGroup("Forecast daily totals (14 days)") {
                     dailyRows(snapshot.forecastDays)
                 }
             } else {
@@ -162,7 +162,9 @@ struct LawnIntelligenceView: View {
             if let snapshot = store.weatherSnapshot {
                 LabeledContent("Today", value: snapshot.todayForecast?.precipitationInches.inchesString ?? "Unknown")
                 LabeledContent("Next 3 days", value: store.rainfallSummary.predictedNextThreeDays?.inchesString ?? "Unknown")
-                LabeledContent("Today + next 6 days", value: store.rainfallSummary.predictedNextSevenDays?.inchesString ?? "Unknown")
+                LabeledContent("Next 7 days", value: store.rainfallSummary.predictedNextSevenDays?.inchesString ?? "Unknown")
+                LabeledContent("Days 8-14", value: store.rainfallSummary.predictedSecondWeekRainfall?.inchesString ?? "Unknown")
+                LabeledContent("Next 14 days", value: store.rainfallSummary.predictedNextFourteenDays?.inchesString ?? "Unknown")
                 LabeledContent("Observed water", value: store.rainfallSummary.observedWaterTotal.inchesString)
 
                 if let wettest = snapshot.forecastDays.max(by: { $0.precipitationInches < $1.precipitationInches }) {
@@ -260,19 +262,24 @@ struct LawnIntelligenceView: View {
     }
 
     private func predictionGuidance(summary: LawnRainfallSummary) -> String {
-        let forecast = summary.predictedNextSevenDays ?? 0
+        let nextSevenDays = summary.predictedNextSevenDays ?? 0
+        let secondWeek = summary.predictedSecondWeekRainfall ?? 0
         let observedWater = summary.observedWaterTotal
 
-        if forecast >= 1.0 {
-            return "Rain is likely to cover much of the next watering need. Avoid watering unless new seed or containers are drying out."
+        if nextSevenDays >= 1.0 {
+            return "Rain is likely to cover much of the immediate watering need. Avoid watering unless new seed or containers are drying out."
         }
 
-        if observedWater < 0.75 && forecast < 0.50 {
+        if observedWater < 0.75 && nextSevenDays < 0.50 {
             return "Recent water is light and the forecast is dry. Plan a slow, deep watering if the soil is dry."
         }
 
-        if forecast >= 0.50 {
+        if nextSevenDays >= 0.50 {
             return "Some rainfall is likely. Check the forecast again before running sprinklers."
+        }
+
+        if secondWeek >= 0.75 {
+            return "The first week looks light, but rain is showing in week two. Treat that as planning context, not a reason to ignore dry soil now."
         }
 
         return "Forecast rainfall is limited. Use a rain gauge or soil check before deciding whether to water."

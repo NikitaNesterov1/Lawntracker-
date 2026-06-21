@@ -88,7 +88,9 @@ final class LawnStore: ObservableObject {
             confirmedLastSevenDays: sevenDayRainfall,
             confirmedWeekToDate: currentWeekRainfall,
             weatherEstimatedPreviousSevenDays: weatherSnapshot?.recentRainfallTotal,
-            predictedNextSevenDays: weatherSnapshot?.forecastRainfallTotal,
+            predictedNextSevenDays: weatherSnapshot?.nextSevenDayRainfallTotal,
+            predictedNextFourteenDays: weatherSnapshot?.nextFourteenDayRainfallTotal,
+            predictedSecondWeekRainfall: weatherSnapshot?.secondWeekRainfallTotal,
             predictedNextThreeDays: weatherSnapshot?.nextThreeDayRainfallTotal,
             wateringLastSevenDays: sevenDayWaterEquivalent
         )

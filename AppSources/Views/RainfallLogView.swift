@@ -17,8 +17,11 @@ struct RainfallLogView: View {
                     if let estimate = store.rainfallSummary.weatherEstimatedPreviousSevenDays {
                         LabeledContent("Weather estimate, previous 7 days", value: estimate.inchesString)
                     }
-                    if let prediction = store.rainfallSummary.predictedNextSevenDays {
-                        LabeledContent("Forecast, today + next 6 days", value: prediction.inchesString)
+                    if let prediction = store.rainfallSummary.predictedNextFourteenDays {
+                        LabeledContent("Forecast, next 14 days", value: prediction.inchesString)
+                    }
+                    if let secondWeek = store.rainfallSummary.predictedSecondWeekRainfall {
+                        LabeledContent("Forecast, days 8-14", value: secondWeek.inchesString)
                     }
                 }
 

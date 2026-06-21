@@ -49,7 +49,7 @@ struct WeatherService {
             .suffix(7)
         let forecastDays = dailyRows
             .filter { $0.date >= today }
-            .prefix(7)
+            .prefix(14)
 
         return LawnWeatherSnapshot(
             fetchedAt: Date(),
@@ -111,7 +111,7 @@ struct WeatherService {
             URLQueryItem(name: "precipitation_unit", value: "inch"),
             URLQueryItem(name: "timezone", value: "auto"),
             URLQueryItem(name: "past_days", value: "7"),
-            URLQueryItem(name: "forecast_days", value: "7")
+            URLQueryItem(name: "forecast_days", value: "14")
         ]
 
         guard let url = components?.url else {

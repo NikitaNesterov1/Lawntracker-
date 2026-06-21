@@ -37,9 +37,9 @@ struct DashboardView: View {
                             subtitle: "Estimated irrigation equivalent"
                         )
                         MetricCard(
-                            title: "Rain forecast",
-                            value: store.rainfallSummary.predictedNextSevenDays?.inchesString ?? "--",
-                            subtitle: "Today + next 6 days"
+                            title: "2-week forecast",
+                            value: store.rainfallSummary.predictedNextFourteenDays?.inchesString ?? "--",
+                            subtitle: "Today + next 13 days"
                         )
                         MetricCard(
                             title: "Observed water",

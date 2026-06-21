@@ -21,7 +21,7 @@ GitHub repository target: `https://github.com/NikitaNesterov1/Lawntracker-.git`
 
 - Logged rain is the user's manual rain-gauge or observed rainfall entry.
 - Weather estimate is Open-Meteo's previous 7 completed daily rainfall totals.
-- Rainfall prediction is the forecast for today plus the next 6 days.
+- Rainfall prediction shows the next 14 days, including a separate days 8-14 total.
 - Dashboard guidance uses logged rain first; if there is no logged rain, it falls back to the weather estimate.
 
 ## How to build without a Mac

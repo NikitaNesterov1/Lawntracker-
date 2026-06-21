@@ -18,6 +18,18 @@ struct LawnWeatherSnapshot: Codable, Equatable {
         forecastDays.map(\.precipitationInches).reduce(0, +)
     }
 
+    var nextSevenDayRainfallTotal: Double {
+        forecastDays.prefix(7).map(\.precipitationInches).reduce(0, +)
+    }
+
+    var nextFourteenDayRainfallTotal: Double {
+        forecastDays.prefix(14).map(\.precipitationInches).reduce(0, +)
+    }
+
+    var secondWeekRainfallTotal: Double {
+        max(0, nextFourteenDayRainfallTotal - nextSevenDayRainfallTotal)
+    }
+
     var recentEvapotranspirationTotal: Double {
         recentDays.compactMap(\.evapotranspirationInches).reduce(0, +)
     }
@@ -51,6 +63,8 @@ struct LawnRainfallSummary: Equatable {
     var confirmedWeekToDate: Double
     var weatherEstimatedPreviousSevenDays: Double?
     var predictedNextSevenDays: Double?
+    var predictedNextFourteenDays: Double?
+    var predictedSecondWeekRainfall: Double?
     var predictedNextThreeDays: Double?
     var wateringLastSevenDays: Double
 
