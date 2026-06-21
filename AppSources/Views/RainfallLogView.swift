@@ -11,12 +11,14 @@ struct RainfallLogView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section {
-                    HStack {
-                        Text("7-day total")
-                        Spacer()
-                        Text(store.sevenDayRainfall.inchesString)
-                            .font(.headline)
+                Section("Totals") {
+                    LabeledContent("Logged rain, last 7 days", value: store.sevenDayRainfall.inchesString)
+                    LabeledContent("Logged rain, this week", value: store.currentWeekRainfall.inchesString)
+                    if let estimate = store.rainfallSummary.weatherEstimatedPreviousSevenDays {
+                        LabeledContent("Weather estimate, previous 7 days", value: estimate.inchesString)
+                    }
+                    if let prediction = store.rainfallSummary.predictedNextSevenDays {
+                        LabeledContent("Forecast, today + next 6 days", value: prediction.inchesString)
                     }
                 }
 

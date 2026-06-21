@@ -2,7 +2,9 @@ import Foundation
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject private var store: LawnStore
     @State private var selectedTab = AppTab.previewDefault
+    @State private var showingOnboarding = false
 
     var body: some View {
         TabView(selection: $selectedTab) {
@@ -34,6 +36,15 @@ struct ContentView: View {
                 .tabItem { Label("Plants", systemImage: "tree") }
                 .tag(AppTab.plants)
         }
+        .onAppear {
+            if !store.userProfile.isOnboardingComplete && !AppTab.previewSkipsOnboarding {
+                showingOnboarding = true
+            }
+        }
+        .sheet(isPresented: $showingOnboarding) {
+            LawnOnboardingView()
+                .interactiveDismissDisabled(!store.userProfile.isOnboardingComplete && !AppTab.previewSkipsOnboarding)
+        }
     }
 }
 
@@ -49,5 +60,9 @@ private enum AppTab: String, Hashable {
     static var previewDefault: AppTab {
         let requestedTab = ProcessInfo.processInfo.environment["PREVIEW_TAB"] ?? ""
         return AppTab(rawValue: requestedTab) ?? .dashboard
+    }
+
+    static var previewSkipsOnboarding: Bool {
+        ProcessInfo.processInfo.environment["PREVIEW_SKIP_ONBOARDING"] == "1"
     }
 }

@@ -28,6 +28,7 @@
 		5B0000010000000000000013 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001014 /* WeatherService.swift */; };
 		5B0000010000000000000014 /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001015 /* LocationProvider.swift */; };
 		5B0000010000000000000015 /* LawnIntelligenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001016 /* LawnIntelligenceView.swift */; };
+		5B0000010000000000000016 /* LawnOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001017 /* LawnOnboardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		5B0000010000000000001014 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		5B0000010000000000001015 /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
 		5B0000010000000000001016 /* LawnIntelligenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawnIntelligenceView.swift; sourceTree = "<group>"; };
+		5B0000010000000000001017 /* LawnOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawnOnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 			children = (
 				5B0000010000000000001008 /* DashboardView.swift */,
 				5B0000010000000000001016 /* LawnIntelligenceView.swift */,
+				5B0000010000000000001017 /* LawnOnboardingView.swift */,
 				5B0000010000000000001009 /* PlantInventoryView.swift */,
 				5B000001000000000000100A /* RainfallLogView.swift */,
 				5B000001000000000000100B /* SeasonalPlanView.swift */,
@@ -225,6 +228,7 @@
 				5B0000010000000000000013 /* WeatherService.swift in Sources */,
 				5B0000010000000000000008 /* DashboardView.swift in Sources */,
 				5B0000010000000000000015 /* LawnIntelligenceView.swift in Sources */,
+				5B0000010000000000000016 /* LawnOnboardingView.swift in Sources */,
 				5B0000010000000000000009 /* PlantInventoryView.swift in Sources */,
 				5B000001000000000000000A /* RainfallLogView.swift in Sources */,
 				5B000001000000000000000B /* SeasonalPlanView.swift in Sources */,

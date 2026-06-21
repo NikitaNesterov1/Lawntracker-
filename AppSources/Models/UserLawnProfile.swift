@@ -7,6 +7,7 @@ struct UserLawnProfile: Codable, Equatable {
     var longitude: Double?
     var elevationFeet: Int?
     var lawnSizeSquareFeet: Int
+    var lawnGoal: LawnGoal
     var grassType: GrassType
     var soilTexture: SoilTexture
     var slope: LawnSlope
@@ -14,6 +15,25 @@ struct UserLawnProfile: Codable, Equatable {
     var irrigationMethod: IrrigationMethod
     var mowingHeightInches: Double
     var notes: String
+    var onboardingCompletedAt: Date?
+
+    private enum CodingKeys: String, CodingKey {
+        case propertyName
+        case locationLabel
+        case latitude
+        case longitude
+        case elevationFeet
+        case lawnSizeSquareFeet
+        case lawnGoal
+        case grassType
+        case soilTexture
+        case slope
+        case sunExposure
+        case irrigationMethod
+        case mowingHeightInches
+        case notes
+        case onboardingCompletedAt
+    }
 
     static let bushkillSample = UserLawnProfile(
         propertyName: "Home lawn",
@@ -22,14 +42,73 @@ struct UserLawnProfile: Codable, Equatable {
         longitude: nil,
         elevationFeet: 974,
         lawnSizeSquareFeet: 5000,
+        lawnGoal: .healthyDense,
         grassType: .coolSeasonMix,
         soilTexture: .stonyThin,
         slope: .sloped,
         sunExposure: .mixed,
         irrigationMethod: .manual,
         mowingHeightInches: 3.5,
-        notes: "Summer survival first. Keep grass tall, avoid scalping, and confirm rainfall with a gauge when possible."
+        notes: "Summer survival first. Keep grass tall, avoid scalping, and confirm rainfall with a gauge when possible.",
+        onboardingCompletedAt: nil
     )
+
+    init(
+        propertyName: String,
+        locationLabel: String,
+        latitude: Double?,
+        longitude: Double?,
+        elevationFeet: Int?,
+        lawnSizeSquareFeet: Int,
+        lawnGoal: LawnGoal,
+        grassType: GrassType,
+        soilTexture: SoilTexture,
+        slope: LawnSlope,
+        sunExposure: LawnSunExposure,
+        irrigationMethod: IrrigationMethod,
+        mowingHeightInches: Double,
+        notes: String,
+        onboardingCompletedAt: Date? = nil
+    ) {
+        self.propertyName = propertyName
+        self.locationLabel = locationLabel
+        self.latitude = latitude
+        self.longitude = longitude
+        self.elevationFeet = elevationFeet
+        self.lawnSizeSquareFeet = lawnSizeSquareFeet
+        self.lawnGoal = lawnGoal
+        self.grassType = grassType
+        self.soilTexture = soilTexture
+        self.slope = slope
+        self.sunExposure = sunExposure
+        self.irrigationMethod = irrigationMethod
+        self.mowingHeightInches = mowingHeightInches
+        self.notes = notes
+        self.onboardingCompletedAt = onboardingCompletedAt
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        propertyName = try container.decodeIfPresent(String.self, forKey: .propertyName) ?? "Home lawn"
+        locationLabel = try container.decodeIfPresent(String.self, forKey: .locationLabel) ?? "Unknown location"
+        latitude = try container.decodeIfPresent(Double.self, forKey: .latitude)
+        longitude = try container.decodeIfPresent(Double.self, forKey: .longitude)
+        elevationFeet = try container.decodeIfPresent(Int.self, forKey: .elevationFeet)
+        lawnSizeSquareFeet = try container.decodeIfPresent(Int.self, forKey: .lawnSizeSquareFeet) ?? 5000
+        lawnGoal = try container.decodeIfPresent(LawnGoal.self, forKey: .lawnGoal) ?? .healthyDense
+        grassType = try container.decodeIfPresent(GrassType.self, forKey: .grassType) ?? .coolSeasonMix
+        soilTexture = try container.decodeIfPresent(SoilTexture.self, forKey: .soilTexture) ?? .unknown
+        slope = try container.decodeIfPresent(LawnSlope.self, forKey: .slope) ?? .mixed
+        sunExposure = try container.decodeIfPresent(LawnSunExposure.self, forKey: .sunExposure) ?? .mixed
+        irrigationMethod = try container.decodeIfPresent(IrrigationMethod.self, forKey: .irrigationMethod) ?? .manual
+        mowingHeightInches = try container.decodeIfPresent(Double.self, forKey: .mowingHeightInches) ?? 3.5
+        notes = try container.decodeIfPresent(String.self, forKey: .notes) ?? ""
+        onboardingCompletedAt = try container.decodeIfPresent(Date.self, forKey: .onboardingCompletedAt)
+    }
+
+    var isOnboardingComplete: Bool {
+        onboardingCompletedAt != nil
+    }
 
     var hasCoordinate: Bool {
         latitude != nil && longitude != nil
@@ -41,6 +120,17 @@ struct UserLawnProfile: Codable, Equatable {
         }
         return String(format: "%.4f, %.4f", latitude, longitude)
     }
+}
+
+enum LawnGoal: String, Codable, CaseIterable, Identifiable {
+    case healthyDense = "Healthy, dense lawn"
+    case droughtResilient = "Drought resilience"
+    case repairBareSpots = "Repair bare spots"
+    case lowMaintenance = "Low maintenance"
+    case renovation = "Fall renovation"
+    case curbAppeal = "Curb appeal"
+
+    var id: String { rawValue }
 }
 
 enum GrassType: String, Codable, CaseIterable, Identifiable {

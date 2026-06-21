@@ -29,6 +29,45 @@ struct LawnWeatherSnapshot: Codable, Equatable {
     var recentMoistureBalance: Double {
         recentRainfallTotal - recentEvapotranspirationTotal
     }
+
+    var todayForecast: DailyLawnWeather? {
+        let today = Calendar.current.startOfDay(for: Date())
+        return forecastDays.first { Calendar.current.isDate($0.date, inSameDayAs: today) }
+    }
+
+    var nextThreeDayRainfallTotal: Double {
+        forecastDays.prefix(3).map(\.precipitationInches).reduce(0, +)
+    }
+
+    var highestRainChanceDay: DailyLawnWeather? {
+        forecastDays.max {
+            ($0.precipitationProbabilityPercent ?? 0) < ($1.precipitationProbabilityPercent ?? 0)
+        }
+    }
+}
+
+struct LawnRainfallSummary: Equatable {
+    var confirmedLastSevenDays: Double
+    var confirmedWeekToDate: Double
+    var weatherEstimatedPreviousSevenDays: Double?
+    var predictedNextSevenDays: Double?
+    var predictedNextThreeDays: Double?
+    var wateringLastSevenDays: Double
+
+    var bestObservedRainfall: Double {
+        if confirmedLastSevenDays > 0 {
+            return confirmedLastSevenDays
+        }
+        return weatherEstimatedPreviousSevenDays ?? 0
+    }
+
+    var observedSourceLabel: String {
+        confirmedLastSevenDays > 0 ? "Using logged rainfall" : "Using weather estimate"
+    }
+
+    var observedWaterTotal: Double {
+        bestObservedRainfall + wateringLastSevenDays
+    }
 }
 
 struct CurrentLawnWeather: Codable, Equatable {

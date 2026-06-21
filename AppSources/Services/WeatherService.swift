@@ -33,8 +33,10 @@ struct WeatherService {
         }
 
         let response: OpenMeteoForecastResponse = try await fetchJSON(from: forecastURL(latitude: latitude, longitude: longitude))
-        let dailyRows = dailyWeatherRows(from: response.daily)
-        let calendar = Calendar.current
+        let responseTimeZone = response.timezone.flatMap(TimeZone.init(identifier:)) ?? .current
+        let dailyRows = dailyWeatherRows(from: response.daily, timeZone: responseTimeZone)
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = responseTimeZone
         let today = calendar.startOfDay(for: Date())
         let recentDays = dailyRows
             .filter { $0.date < today }
@@ -134,10 +136,11 @@ struct WeatherService {
         )
     }
 
-    private func dailyWeatherRows(from daily: OpenMeteoDailyWeather?) -> [DailyLawnWeather] {
+    private func dailyWeatherRows(from daily: OpenMeteoDailyWeather?, timeZone: TimeZone) -> [DailyLawnWeather] {
         guard let daily else { return [] }
+        let formatter = Self.dayFormatter(timeZone: timeZone)
         return daily.time.enumerated().compactMap { index, dayString in
-            guard let date = Self.dayFormatter.date(from: dayString) else { return nil }
+            guard let date = formatter.date(from: dayString) else { return nil }
             return DailyLawnWeather(
                 date: date,
                 precipitationInches: daily.precipitation_sum[safe: index] ?? 0,
@@ -150,14 +153,14 @@ struct WeatherService {
         }
     }
 
-    private static let dayFormatter: DateFormatter = {
+    private static func dayFormatter(timeZone: TimeZone) -> DateFormatter {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.timeZone = timeZone
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
-    }()
+    }
 
     private static let dayAndMinuteFormatter: DateFormatter = {
         let formatter = DateFormatter()

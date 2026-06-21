@@ -72,19 +72,26 @@ final class LawnStore: ObservableObject {
     }
 
     var sevenDayRainfall: Double {
-        let start = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        return rainfallEntries
-            .filter { $0.date >= start }
-            .map(\.amountInches)
-            .reduce(0, +)
+        rainfallTotal(in: lastSevenCalendarDaysInterval)
     }
 
     var sevenDayWaterEquivalent: Double {
-        let start = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
-        return wateringEntries
-            .filter { $0.date >= start }
-            .map(\.estimatedInches)
-            .reduce(0, +)
+        wateringTotal(in: lastSevenCalendarDaysInterval)
+    }
+
+    var currentWeekRainfall: Double {
+        rainfallTotal(in: currentWeekInterval)
+    }
+
+    var rainfallSummary: LawnRainfallSummary {
+        LawnRainfallSummary(
+            confirmedLastSevenDays: sevenDayRainfall,
+            confirmedWeekToDate: currentWeekRainfall,
+            weatherEstimatedPreviousSevenDays: weatherSnapshot?.recentRainfallTotal,
+            predictedNextSevenDays: weatherSnapshot?.forecastRainfallTotal,
+            predictedNextThreeDays: weatherSnapshot?.nextThreeDayRainfallTotal,
+            wateringLastSevenDays: sevenDayWaterEquivalent
+        )
     }
 
     var lastRainfall: RainfallEntry? {
@@ -93,6 +100,37 @@ final class LawnStore: ObservableObject {
 
     var lastWatering: WateringEntry? {
         wateringEntries.sorted { $0.date > $1.date }.first
+    }
+
+    private var lastSevenCalendarDaysInterval: DateInterval {
+        let calendar = Calendar.current
+        let todayStart = calendar.startOfDay(for: Date())
+        let start = calendar.date(byAdding: .day, value: -6, to: todayStart) ?? todayStart
+        let end = calendar.date(byAdding: .day, value: 1, to: todayStart) ?? Date()
+        return DateInterval(start: start, end: end)
+    }
+
+    private var currentWeekInterval: DateInterval {
+        let calendar = Calendar.current
+        let now = Date()
+        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: now)
+        let start = calendar.date(from: components) ?? calendar.startOfDay(for: now)
+        let end = calendar.date(byAdding: .day, value: 1, to: calendar.startOfDay(for: now)) ?? now
+        return DateInterval(start: start, end: end)
+    }
+
+    private func rainfallTotal(in interval: DateInterval) -> Double {
+        rainfallEntries
+            .filter { interval.contains($0.date) }
+            .map(\.amountInches)
+            .reduce(0, +)
+    }
+
+    private func wateringTotal(in interval: DateInterval) -> Double {
+        wateringEntries
+            .filter { interval.contains($0.date) }
+            .map(\.estimatedInches)
+            .reduce(0, +)
     }
 
     private func save() {

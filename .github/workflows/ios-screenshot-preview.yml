@@ -86,9 +86,13 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p Screenshots
+          xcrun simctl launch --terminate-running-process "${{ steps.simulator.outputs.udid }}" com.bushkill.BushkillLawnTracker
+          sleep 4
+          xcrun simctl io "${{ steps.simulator.outputs.udid }}" screenshot "Screenshots/onboarding.png"
+
           tabs=(dashboard info rain water work plan plants)
           for tab in "${tabs[@]}"; do
-            SIMCTL_CHILD_PREVIEW_TAB="$tab" xcrun simctl launch --terminate-running-process "${{ steps.simulator.outputs.udid }}" com.bushkill.BushkillLawnTracker
+            SIMCTL_CHILD_PREVIEW_TAB="$tab" SIMCTL_CHILD_PREVIEW_SKIP_ONBOARDING=1 xcrun simctl launch --terminate-running-process "${{ steps.simulator.outputs.udid }}" com.bushkill.BushkillLawnTracker
             sleep 4
             xcrun simctl io "${{ steps.simulator.outputs.udid }}" screenshot "Screenshots/${tab}.png"
           done

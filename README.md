@@ -7,7 +7,8 @@ GitHub repository target: `https://github.com/NikitaNesterov1/Lawntracker-.git`
 ## Current MVP
 
 - Dashboard with property profile and lawn-care recommendation
-- Lawn Info tab for location, lawn basics, weather, forecast, rainfall totals, and moisture balance
+- Guided onboarding for location, lawn goals, lawn size, grass type, soil, slope, sun, irrigation, and mowing height
+- Lawn Info tab for location, lawn basics, weather, forecast, rainfall totals, rainfall prediction, and moisture balance
 - Rainfall log with 7-day total calculation
 - Watering log with recent watering summary
 - Mowing/trimming log, including weed-whacker-only notes
@@ -15,6 +16,13 @@ GitHub repository target: `https://github.com/NikitaNesterov1/Lawntracker-.git`
 - Plant inventory for lawn-adjacent landscaping
 - Local persistence using UserDefaults and JSON encoding
 - Weather estimates from Open-Meteo, with no API key required for the initial implementation
+
+## Rainfall numbers
+
+- Logged rain is the user's manual rain-gauge or observed rainfall entry.
+- Weather estimate is Open-Meteo's previous 7 completed daily rainfall totals.
+- Rainfall prediction is the forecast for today plus the next 6 days.
+- Dashboard guidance uses logged rain first; if there is no logged rain, it falls back to the weather estimate.
 
 ## How to build without a Mac
 

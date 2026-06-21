@@ -9,6 +9,7 @@ struct LawnIntelligenceView: View {
     @State private var locationResults: [LocationSearchResult] = []
     @State private var isSearchingLocation = false
     @State private var isRefreshingWeather = false
+    @State private var showingOnboarding = false
     @State private var statusMessage: String?
 
     private let weatherService = WeatherService()
@@ -18,6 +19,7 @@ struct LawnIntelligenceView: View {
             List {
                 locationSection
                 weatherSection
+                rainfallPredictionSection
                 lawnBasicsSection
                 lawnReadSection
             }
@@ -36,6 +38,9 @@ struct LawnIntelligenceView: View {
             .onReceive(locationProvider.$lastResolvedName.compactMap { $0 }) { resolvedName in
                 store.userProfile.locationLabel = resolvedName
             }
+            .sheet(isPresented: $showingOnboarding) {
+                LawnOnboardingView()
+            }
         }
     }
 
@@ -47,6 +52,12 @@ struct LawnIntelligenceView: View {
                 LabeledContent("Elevation", value: "\(elevationFeet) ft")
             }
             LabeledContent("Permission", value: locationProvider.authorizationDescription)
+
+            Button {
+                showingOnboarding = true
+            } label: {
+                Label("Open Guided Setup", systemImage: "slider.horizontal.3")
+            }
 
             Button {
                 locationProvider.requestUserLocation()
@@ -100,6 +111,8 @@ struct LawnIntelligenceView: View {
 
     private var weatherSection: some View {
         Section("Weather and rainfall") {
+            let summary = store.rainfallSummary
+
             Button {
                 Task { await refreshWeather() }
             } label: {
@@ -114,8 +127,8 @@ struct LawnIntelligenceView: View {
                     LabeledContent("Wind", value: current.windSpeedMph?.mphString ?? "Unknown")
                 }
 
-                LabeledContent("Past 7 days rain", value: snapshot.recentRainfallTotal.inchesString)
-                LabeledContent("Next 7 days rain", value: snapshot.forecastRainfallTotal.inchesString)
+                LabeledContent("Logged rain, last 7 days", value: summary.confirmedLastSevenDays.inchesString)
+                LabeledContent("Weather estimate, previous 7 days", value: snapshot.recentRainfallTotal.inchesString)
                 LabeledContent("Past 7 days ET", value: snapshot.recentEvapotranspirationTotal.inchesString)
 
                 Text("Updated \(DateFormatter.lawnShortWithTime.string(from: snapshot.fetchedAt))")
@@ -137,9 +150,45 @@ struct LawnIntelligenceView: View {
         }
     }
 
+    private var rainfallPredictionSection: some View {
+        Section("Rainfall prediction") {
+            let summary = store.rainfallSummary
+
+            if let snapshot = store.weatherSnapshot {
+                LabeledContent("Today", value: snapshot.todayForecast?.precipitationInches.inchesString ?? "Unknown")
+                LabeledContent("Next 3 days", value: summary.predictedNextThreeDays?.inchesString ?? "Unknown")
+                LabeledContent("Today + next 6 days", value: summary.predictedNextSevenDays?.inchesString ?? "Unknown")
+                LabeledContent("Observed water", value: summary.observedWaterTotal.inchesString)
+
+                if let wettest = snapshot.forecastDays.max(by: { $0.precipitationInches < $1.precipitationInches }) {
+                    LabeledContent("Wettest forecast day", value: "\(DateFormatter.lawnShort.string(from: wettest.date)) - \(wettest.precipitationInches.inchesString)")
+                }
+
+                if let chance = snapshot.highestRainChanceDay,
+                   let probability = chance.precipitationProbabilityPercent {
+                    LabeledContent("Highest rain chance", value: "\(DateFormatter.lawnShort.string(from: chance.date)) - \(probability)%")
+                }
+
+                Text(predictionGuidance(summary: summary))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            } else {
+                Text("Refresh weather after saving a location to see predicted rainfall.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+
     private var lawnBasicsSection: some View {
         Section("Lawn basics") {
             TextField("Property name", text: binding(\.propertyName))
+
+            Picker("Goal", selection: binding(\.lawnGoal)) {
+                ForEach(LawnGoal.allCases) { goal in
+                    Text(goal.rawValue).tag(goal)
+                }
+            }
 
             Stepper(value: binding(\.lawnSizeSquareFeet), in: 0...200000, step: 100) {
                 LabeledContent("Lawn size", value: "\(store.userProfile.lawnSizeSquareFeet) sq ft")
@@ -186,8 +235,9 @@ struct LawnIntelligenceView: View {
 
     private var lawnReadSection: some View {
         Section("Lawn read") {
+            let summary = store.rainfallSummary
             let recommendation = LawnAdvisor.recommendation(
-                sevenDayRainfall: store.weatherSnapshot?.recentRainfallTotal ?? store.sevenDayRainfall,
+                sevenDayRainfall: summary.bestObservedRainfall,
                 sevenDayWaterEquivalent: store.sevenDayWaterEquivalent,
                 lastWatering: store.lastWatering
             )
@@ -196,6 +246,7 @@ struct LawnIntelligenceView: View {
                 .font(.headline)
             Text(recommendation.detail)
                 .foregroundStyle(.secondary)
+            LabeledContent("Rain source", value: summary.observedSourceLabel)
 
             if let snapshot = store.weatherSnapshot {
                 let balance = snapshot.recentMoistureBalance
@@ -209,6 +260,25 @@ struct LawnIntelligenceView: View {
                 .font(.caption)
                 .foregroundStyle(.secondary)
         }
+    }
+
+    private func predictionGuidance(summary: LawnRainfallSummary) -> String {
+        let forecast = summary.predictedNextSevenDays ?? 0
+        let observedWater = summary.observedWaterTotal
+
+        if forecast >= 1.0 {
+            return "Rain is likely to cover much of the next watering need. Avoid watering unless new seed or containers are drying out."
+        }
+
+        if observedWater < 0.75 && forecast < 0.50 {
+            return "Recent water is light and the forecast is dry. Plan a slow, deep watering if the soil is dry."
+        }
+
+        if forecast >= 0.50 {
+            return "Some rainfall is likely. Check the forecast again before running sprinklers."
+        }
+
+        return "Forecast rainfall is limited. Use a rain gauge or soil check before deciding whether to water."
     }
 
     @ViewBuilder

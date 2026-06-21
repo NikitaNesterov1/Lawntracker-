@@ -50,4 +50,15 @@ The first version uses weather and lawn facts to show:
 - Basic moisture balance
 - Watering guidance using the existing lawn recommendation logic
 
+## Rainfall Math
+
+The app keeps separate rainfall sources so totals are easier to trust:
+
+- Logged rain: user-entered rainfall for the last 7 calendar days, including today
+- Week-to-date rain: user-entered rainfall from the current calendar week
+- Weather estimate: Open-Meteo's previous 7 completed daily rainfall totals
+- Rainfall prediction: Open-Meteo's forecast for today plus the next 6 days
+
+When generating lawn guidance, the app uses logged rainfall first. If the user has not logged rain for the period, it falls back to the weather estimate.
+
 Future versions can add soil temperature, soil moisture, growing degree days, mowing windows, seed germination windows, fertilizer timing, and disease-risk alerts.
