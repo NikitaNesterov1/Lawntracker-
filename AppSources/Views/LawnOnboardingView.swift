@@ -21,16 +21,7 @@ struct LawnOnboardingView: View {
             Form {
                 progressSection
 
-                switch step {
-                case 0:
-                    identityStep
-                case 1:
-                    locationStep
-                case 2:
-                    lawnDetailsStep
-                default:
-                    careSetupStep
-                }
+                currentStep
             }
             .navigationTitle("Lawn Setup")
             .toolbar {
@@ -131,11 +122,31 @@ struct LawnOnboardingView: View {
                 }
             }
 
-            if let message = locationProvider.errorMessage ?? statusMessage {
-                Text(message)
+            if let errorMessage = locationProvider.errorMessage {
+                Text(errorMessage)
+                    .font(.caption)
+                    .foregroundStyle(.red)
+            }
+
+            if let statusMessage {
+                Text(statusMessage)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+        }
+    }
+
+    @ViewBuilder
+    private var currentStep: some View {
+        switch step {
+        case 0:
+            identityStep
+        case 1:
+            locationStep
+        case 2:
+            lawnDetailsStep
+        default:
+            careSetupStep
         }
     }
 

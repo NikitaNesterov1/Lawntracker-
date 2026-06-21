@@ -33,7 +33,13 @@ struct WeatherService {
         }
 
         let response: OpenMeteoForecastResponse = try await fetchJSON(from: forecastURL(latitude: latitude, longitude: longitude))
-        let responseTimeZone = response.timezone.flatMap(TimeZone.init(identifier:)) ?? .current
+        let responseTimeZone: TimeZone
+        if let timezone = response.timezone,
+           let resolvedTimeZone = TimeZone(identifier: timezone) {
+            responseTimeZone = resolvedTimeZone
+        } else {
+            responseTimeZone = .current
+        }
         let dailyRows = dailyWeatherRows(from: response.daily, timeZone: responseTimeZone)
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = responseTimeZone

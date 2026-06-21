@@ -106,6 +106,25 @@ struct UserLawnProfile: Codable, Equatable {
         onboardingCompletedAt = try container.decodeIfPresent(Date.self, forKey: .onboardingCompletedAt)
     }
 
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(propertyName, forKey: .propertyName)
+        try container.encode(locationLabel, forKey: .locationLabel)
+        try container.encodeIfPresent(latitude, forKey: .latitude)
+        try container.encodeIfPresent(longitude, forKey: .longitude)
+        try container.encodeIfPresent(elevationFeet, forKey: .elevationFeet)
+        try container.encode(lawnSizeSquareFeet, forKey: .lawnSizeSquareFeet)
+        try container.encode(lawnGoal, forKey: .lawnGoal)
+        try container.encode(grassType, forKey: .grassType)
+        try container.encode(soilTexture, forKey: .soilTexture)
+        try container.encode(slope, forKey: .slope)
+        try container.encode(sunExposure, forKey: .sunExposure)
+        try container.encode(irrigationMethod, forKey: .irrigationMethod)
+        try container.encode(mowingHeightInches, forKey: .mowingHeightInches)
+        try container.encode(notes, forKey: .notes)
+        try container.encodeIfPresent(onboardingCompletedAt, forKey: .onboardingCompletedAt)
+    }
+
     var isOnboardingComplete: Bool {
         onboardingCompletedAt != nil
     }

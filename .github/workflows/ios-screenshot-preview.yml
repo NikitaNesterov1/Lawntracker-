@@ -65,6 +65,7 @@ jobs:
       - name: Build app
         run: |
           set -euo pipefail
+          set +e
           xcodebuild \
             -project BushkillLawnTracker.xcodeproj \
             -scheme BushkillLawnTracker \
@@ -73,7 +74,24 @@ jobs:
             -destination "${{ steps.simulator.outputs.destination }}" \
             -derivedDataPath DerivedData \
             CODE_SIGNING_ALLOWED=NO \
-            clean build
+            clean build 2>&1 | tee xcodebuild.log
+          build_status="${PIPESTATUS[0]}"
+          set -e
+
+          if [ "$build_status" -ne 0 ]; then
+            echo "::group::Xcode error lines"
+            grep -nE "error:|[Ee]rror" xcodebuild.log | tail -50 || true
+            echo "::endgroup::"
+            exit "$build_status"
+          fi
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: xcodebuild-log
+          path: xcodebuild.log
+          if-no-files-found: ignore
 
       - name: Boot simulator and install app
         run: |

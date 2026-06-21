@@ -1,4 +1,5 @@
 import CoreLocation
+import Combine
 import Foundation
 
 final class LocationProvider: NSObject, ObservableObject, CLLocationManagerDelegate {

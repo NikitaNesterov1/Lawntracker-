@@ -14,6 +14,15 @@ struct LawnIntelligenceView: View {
 
     private let weatherService = WeatherService()
 
+    private var currentRecommendation: LawnRecommendation {
+        let summary = store.rainfallSummary
+        return LawnAdvisor.recommendation(
+            sevenDayRainfall: summary.bestObservedRainfall,
+            sevenDayWaterEquivalent: store.sevenDayWaterEquivalent,
+            lastWatering: store.lastWatering
+        )
+    }
+
     var body: some View {
         NavigationStack {
             List {
@@ -111,8 +120,6 @@ struct LawnIntelligenceView: View {
 
     private var weatherSection: some View {
         Section("Weather and rainfall") {
-            let summary = store.rainfallSummary
-
             Button {
                 Task { await refreshWeather() }
             } label: {
@@ -127,7 +134,7 @@ struct LawnIntelligenceView: View {
                     LabeledContent("Wind", value: current.windSpeedMph?.mphString ?? "Unknown")
                 }
 
-                LabeledContent("Logged rain, last 7 days", value: summary.confirmedLastSevenDays.inchesString)
+                LabeledContent("Logged rain, last 7 days", value: store.rainfallSummary.confirmedLastSevenDays.inchesString)
                 LabeledContent("Weather estimate, previous 7 days", value: snapshot.recentRainfallTotal.inchesString)
                 LabeledContent("Past 7 days ET", value: snapshot.recentEvapotranspirationTotal.inchesString)
 
@@ -152,13 +159,11 @@ struct LawnIntelligenceView: View {
 
     private var rainfallPredictionSection: some View {
         Section("Rainfall prediction") {
-            let summary = store.rainfallSummary
-
             if let snapshot = store.weatherSnapshot {
                 LabeledContent("Today", value: snapshot.todayForecast?.precipitationInches.inchesString ?? "Unknown")
-                LabeledContent("Next 3 days", value: summary.predictedNextThreeDays?.inchesString ?? "Unknown")
-                LabeledContent("Today + next 6 days", value: summary.predictedNextSevenDays?.inchesString ?? "Unknown")
-                LabeledContent("Observed water", value: summary.observedWaterTotal.inchesString)
+                LabeledContent("Next 3 days", value: store.rainfallSummary.predictedNextThreeDays?.inchesString ?? "Unknown")
+                LabeledContent("Today + next 6 days", value: store.rainfallSummary.predictedNextSevenDays?.inchesString ?? "Unknown")
+                LabeledContent("Observed water", value: store.rainfallSummary.observedWaterTotal.inchesString)
 
                 if let wettest = snapshot.forecastDays.max(by: { $0.precipitationInches < $1.precipitationInches }) {
                     LabeledContent("Wettest forecast day", value: "\(DateFormatter.lawnShort.string(from: wettest.date)) - \(wettest.precipitationInches.inchesString)")
@@ -169,7 +174,7 @@ struct LawnIntelligenceView: View {
                     LabeledContent("Highest rain chance", value: "\(DateFormatter.lawnShort.string(from: chance.date)) - \(probability)%")
                 }
 
-                Text(predictionGuidance(summary: summary))
+                Text(predictionGuidance(summary: store.rainfallSummary))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             } else {
@@ -235,23 +240,15 @@ struct LawnIntelligenceView: View {
 
     private var lawnReadSection: some View {
         Section("Lawn read") {
-            let summary = store.rainfallSummary
-            let recommendation = LawnAdvisor.recommendation(
-                sevenDayRainfall: summary.bestObservedRainfall,
-                sevenDayWaterEquivalent: store.sevenDayWaterEquivalent,
-                lastWatering: store.lastWatering
-            )
-
-            Text(recommendation.title)
+            Text(currentRecommendation.title)
                 .font(.headline)
-            Text(recommendation.detail)
+            Text(currentRecommendation.detail)
                 .foregroundStyle(.secondary)
-            LabeledContent("Rain source", value: summary.observedSourceLabel)
+            LabeledContent("Rain source", value: store.rainfallSummary.observedSourceLabel)
 
             if let snapshot = store.weatherSnapshot {
-                let balance = snapshot.recentMoistureBalance
-                LabeledContent("Moisture balance", value: balance.signedInchesString)
-                Text(balance < -0.5 ? "Recent water loss is outpacing rainfall. Check soil moisture before adding irrigation." : "Recent rainfall and water loss are reasonably balanced.")
+                LabeledContent("Moisture balance", value: snapshot.recentMoistureBalance.signedInchesString)
+                Text(snapshot.recentMoistureBalance < -0.5 ? "Recent water loss is outpacing rainfall. Check soil moisture before adding irrigation." : "Recent rainfall and water loss are reasonably balanced.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
