@@ -1,0 +1,91 @@
+name: iOS Simulator Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build on latest iOS simulator
+    runs-on: macos-26
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Show Xcode and simulator environment
+        run: |
+          set -euo pipefail
+          xcodebuild -version
+          xcodebuild -showsdks
+          xcrun simctl list runtimes available
+
+      - name: Select newest available iOS simulator
+        id: simulator
+        run: |
+          set -euo pipefail
+          devices_json="$(mktemp)"
+          xcrun simctl list devices available --json > "$devices_json"
+
+          destination="$(python3 - "$devices_json" <<'PY'
+          import json
+          import re
+          import sys
+
+          with open(sys.argv[1], encoding="utf-8") as handle:
+              data = json.load(handle)
+
+          candidates = []
+          for runtime_id, devices in data.get("devices", {}).items():
+              if ".iOS-" not in runtime_id:
+                  continue
+
+              match = re.search(r"iOS-(\d+)-(\d+)(?:-(\d+))?", runtime_id)
+              if not match:
+                  continue
+
+              version = tuple(int(part or 0) for part in match.groups())
+              for device in devices:
+                  name = device.get("name", "")
+                  if device.get("isAvailable") and name.startswith("iPhone"):
+                      candidates.append((version, name, device["udid"]))
+
+          if not candidates:
+              raise SystemExit("No available iOS simulator was found.")
+
+          def score(candidate):
+              version, name, _ = candidate
+              preferred_size = 2 if "Pro Max" in name else 1 if "Pro" in name else 0
+              return (version, preferred_size, name)
+
+          version, name, udid = max(candidates, key=score)
+          print(f"platform=iOS Simulator,id={udid}")
+          print(f"Selected {name} on iOS {'.'.join(map(str, version)).rstrip('.0')}", file=sys.stderr)
+          PY
+          )"
+
+          echo "destination=$destination" >> "$GITHUB_OUTPUT"
+          echo "Using destination: $destination"
+
+      - name: Build app
+        run: |
+          set -euo pipefail
+          xcodebuild \
+            -project BushkillLawnTracker.xcodeproj \
+            -scheme BushkillLawnTracker \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination "${{ steps.simulator.outputs.destination }}" \
+            -derivedDataPath DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            clean build
+
+      - name: Upload simulator app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: BushkillLawnTracker-simulator-app
+          path: DerivedData/Build/Products/Debug-iphonesimulator/BushkillLawnTracker.app
+          if-no-files-found: error

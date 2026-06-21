@@ -1,0 +1,425 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5B0000010000000000000001 /* BushkillLawnTrackerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001001 /* BushkillLawnTrackerApp.swift */; };
+		5B0000010000000000000002 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001002 /* ContentView.swift */; };
+		5B0000010000000000000003 /* LawnProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001003 /* LawnProfile.swift */; };
+		5B0000010000000000000004 /* LawnStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001004 /* LawnStore.swift */; };
+		5B0000010000000000000005 /* LogModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001005 /* LogModels.swift */; };
+		5B0000010000000000000006 /* LawnAdvisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001006 /* LawnAdvisor.swift */; };
+		5B0000010000000000000007 /* SampleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001007 /* SampleData.swift */; };
+		5B0000010000000000000008 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001008 /* DashboardView.swift */; };
+		5B0000010000000000000009 /* PlantInventoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001009 /* PlantInventoryView.swift */; };
+		5B000001000000000000000A /* RainfallLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B000001000000000000100A /* RainfallLogView.swift */; };
+		5B000001000000000000000B /* SeasonalPlanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B000001000000000000100B /* SeasonalPlanView.swift */; };
+		5B000001000000000000000C /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B000001000000000000100C /* SharedViews.swift */; };
+		5B000001000000000000000D /* WateringLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B000001000000000000100D /* WateringLogView.swift */; };
+		5B000001000000000000000E /* WorkLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B000001000000000000100E /* WorkLogView.swift */; };
+		5B000001000000000000000F /* lawn_profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B000001000000000000100F /* lawn_profile.json */; };
+		5B0000010000000000000010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001010 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5B0000010000000000001001 /* BushkillLawnTrackerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BushkillLawnTrackerApp.swift; sourceTree = "<group>"; };
+		5B0000010000000000001002 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		5B0000010000000000001003 /* LawnProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawnProfile.swift; sourceTree = "<group>"; };
+		5B0000010000000000001004 /* LawnStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawnStore.swift; sourceTree = "<group>"; };
+		5B0000010000000000001005 /* LogModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogModels.swift; sourceTree = "<group>"; };
+		5B0000010000000000001006 /* LawnAdvisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawnAdvisor.swift; sourceTree = "<group>"; };
+		5B0000010000000000001007 /* SampleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleData.swift; sourceTree = "<group>"; };
+		5B0000010000000000001008 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		5B0000010000000000001009 /* PlantInventoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlantInventoryView.swift; sourceTree = "<group>"; };
+		5B000001000000000000100A /* RainfallLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainfallLogView.swift; sourceTree = "<group>"; };
+		5B000001000000000000100B /* SeasonalPlanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeasonalPlanView.swift; sourceTree = "<group>"; };
+		5B000001000000000000100C /* SharedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViews.swift; sourceTree = "<group>"; };
+		5B000001000000000000100D /* WateringLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WateringLogView.swift; sourceTree = "<group>"; };
+		5B000001000000000000100E /* WorkLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkLogView.swift; sourceTree = "<group>"; };
+		5B000001000000000000100F /* lawn_profile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lawn_profile.json; sourceTree = "<group>"; };
+		5B0000010000000000001010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5B0000010000000000001011 /* BushkillLawnTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BushkillLawnTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5B0000010000000000002001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5B0000010000000000003001 = {
+			isa = PBXGroup;
+			children = (
+				5B0000010000000000003002 /* AppSources */,
+				5B0000010000000000003008 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5B0000010000000000003002 /* AppSources */ = {
+			isa = PBXGroup;
+			children = (
+				5B0000010000000000001001 /* BushkillLawnTrackerApp.swift */,
+				5B0000010000000000001002 /* ContentView.swift */,
+				5B0000010000000000003003 /* Models */,
+				5B0000010000000000003004 /* Services */,
+				5B0000010000000000003005 /* Views */,
+				5B0000010000000000003006 /* Resources */,
+			);
+			path = AppSources;
+			sourceTree = "<group>";
+		};
+		5B0000010000000000003003 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5B0000010000000000001003 /* LawnProfile.swift */,
+				5B0000010000000000001004 /* LawnStore.swift */,
+				5B0000010000000000001005 /* LogModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		5B0000010000000000003004 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				5B0000010000000000001006 /* LawnAdvisor.swift */,
+				5B0000010000000000001007 /* SampleData.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		5B0000010000000000003005 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5B0000010000000000001008 /* DashboardView.swift */,
+				5B0000010000000000001009 /* PlantInventoryView.swift */,
+				5B000001000000000000100A /* RainfallLogView.swift */,
+				5B000001000000000000100B /* SeasonalPlanView.swift */,
+				5B000001000000000000100C /* SharedViews.swift */,
+				5B000001000000000000100D /* WateringLogView.swift */,
+				5B000001000000000000100E /* WorkLogView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5B0000010000000000003006 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5B0000010000000000001010 /* Assets.xcassets */,
+				5B000001000000000000100F /* lawn_profile.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5B0000010000000000003008 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5B0000010000000000001011 /* BushkillLawnTracker.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5B0000010000000000004001 /* BushkillLawnTracker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B0000010000000000007002 /* Build configuration list for PBXNativeTarget "BushkillLawnTracker" */;
+			buildPhases = (
+				5B0000010000000000002002 /* Sources */,
+				5B0000010000000000002001 /* Frameworks */,
+				5B0000010000000000002003 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BushkillLawnTracker;
+			productName = BushkillLawnTracker;
+			productReference = 5B0000010000000000001011 /* BushkillLawnTracker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5B0000010000000000005001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					5B0000010000000000004001 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 5B0000010000000000007001 /* Build configuration list for PBXProject "BushkillLawnTracker" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5B0000010000000000003001;
+			productRefGroup = 5B0000010000000000003008 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5B0000010000000000004001 /* BushkillLawnTracker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5B0000010000000000002003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B0000010000000000000010 /* Assets.xcassets in Resources */,
+				5B000001000000000000000F /* lawn_profile.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5B0000010000000000002002 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B0000010000000000000001 /* BushkillLawnTrackerApp.swift in Sources */,
+				5B0000010000000000000002 /* ContentView.swift in Sources */,
+				5B0000010000000000000003 /* LawnProfile.swift in Sources */,
+				5B0000010000000000000004 /* LawnStore.swift in Sources */,
+				5B0000010000000000000005 /* LogModels.swift in Sources */,
+				5B0000010000000000000006 /* LawnAdvisor.swift in Sources */,
+				5B0000010000000000000007 /* SampleData.swift in Sources */,
+				5B0000010000000000000008 /* DashboardView.swift in Sources */,
+				5B0000010000000000000009 /* PlantInventoryView.swift in Sources */,
+				5B000001000000000000000A /* RainfallLogView.swift in Sources */,
+				5B000001000000000000000B /* SeasonalPlanView.swift in Sources */,
+				5B000001000000000000000C /* SharedViews.swift in Sources */,
+				5B000001000000000000000D /* WateringLogView.swift in Sources */,
+				5B000001000000000000000E /* WorkLogView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5B0000010000000000006001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		5B0000010000000000006002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5B0000010000000000006003 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Bushkill Lawn Tracker";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bushkill.BushkillLawnTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5B0000010000000000006004 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Bushkill Lawn Tracker";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bushkill.BushkillLawnTracker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5B0000010000000000007001 /* Build configuration list for PBXProject "BushkillLawnTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B0000010000000000006001 /* Debug */,
+				5B0000010000000000006002 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5B0000010000000000007002 /* Build configuration list for PBXNativeTarget "BushkillLawnTracker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B0000010000000000006003 /* Debug */,
+				5B0000010000000000006004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5B0000010000000000005001 /* Project object */;
+}

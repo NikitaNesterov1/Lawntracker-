@@ -1,0 +1,23 @@
+import Foundation
+
+struct LawnProfile: Codable, Equatable {
+    var locationLabel: String
+    var elevationFeet: Int
+    var terrain: String
+    var soilSummary: String
+    var sunExposure: String
+    var currentEquipment: String
+    var lawnGoal: String
+    var currentDoctrine: String
+
+    static let bushkill = LawnProfile(
+        locationLabel: "Bushkill / Saw Creek, PA",
+        elevationFeet: 974,
+        terrain: "Sloped Pocono lot",
+        soilSummary: "Stony, somewhat thin, likely acidic, drains fairly quickly",
+        sunExposure: "Mixed sun and shade; some areas receive sun after midday",
+        currentEquipment: "Weed whacker only",
+        lawnGoal: "Dense, dark green, fine-bladed lawn with a golf-course/fairway feel",
+        currentDoctrine: "Summer survival first: do not scalp, avoid unnecessary disturbance, water deeply only when needed"
+    )
+}
