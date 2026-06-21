@@ -6,6 +6,9 @@ struct ContentView: View {
             DashboardView()
                 .tabItem { Label("Dashboard", systemImage: "leaf") }
 
+            LawnIntelligenceView()
+                .tabItem { Label("Info", systemImage: "location.magnifyingglass") }
+
             RainfallLogView()
                 .tabItem { Label("Rain", systemImage: "cloud.rain") }
 

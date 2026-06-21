@@ -23,6 +23,11 @@
 		5B000001000000000000000E /* WorkLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B000001000000000000100E /* WorkLogView.swift */; };
 		5B000001000000000000000F /* lawn_profile.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B000001000000000000100F /* lawn_profile.json */; };
 		5B0000010000000000000010 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001010 /* Assets.xcassets */; };
+		5B0000010000000000000011 /* UserLawnProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001012 /* UserLawnProfile.swift */; };
+		5B0000010000000000000012 /* WeatherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001013 /* WeatherModels.swift */; };
+		5B0000010000000000000013 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001014 /* WeatherService.swift */; };
+		5B0000010000000000000014 /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001015 /* LocationProvider.swift */; };
+		5B0000010000000000000015 /* LawnIntelligenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0000010000000000001016 /* LawnIntelligenceView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +48,11 @@
 		5B000001000000000000100F /* lawn_profile.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lawn_profile.json; sourceTree = "<group>"; };
 		5B0000010000000000001010 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5B0000010000000000001011 /* BushkillLawnTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BushkillLawnTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B0000010000000000001012 /* UserLawnProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLawnProfile.swift; sourceTree = "<group>"; };
+		5B0000010000000000001013 /* WeatherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModels.swift; sourceTree = "<group>"; };
+		5B0000010000000000001014 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		5B0000010000000000001015 /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
+		5B0000010000000000001016 /* LawnIntelligenceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawnIntelligenceView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +93,8 @@
 				5B0000010000000000001003 /* LawnProfile.swift */,
 				5B0000010000000000001004 /* LawnStore.swift */,
 				5B0000010000000000001005 /* LogModels.swift */,
+				5B0000010000000000001012 /* UserLawnProfile.swift */,
+				5B0000010000000000001013 /* WeatherModels.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -91,7 +103,9 @@
 			isa = PBXGroup;
 			children = (
 				5B0000010000000000001006 /* LawnAdvisor.swift */,
+				5B0000010000000000001015 /* LocationProvider.swift */,
 				5B0000010000000000001007 /* SampleData.swift */,
+				5B0000010000000000001014 /* WeatherService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -100,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				5B0000010000000000001008 /* DashboardView.swift */,
+				5B0000010000000000001016 /* LawnIntelligenceView.swift */,
 				5B0000010000000000001009 /* PlantInventoryView.swift */,
 				5B000001000000000000100A /* RainfallLogView.swift */,
 				5B000001000000000000100B /* SeasonalPlanView.swift */,
@@ -202,9 +217,14 @@
 				5B0000010000000000000003 /* LawnProfile.swift in Sources */,
 				5B0000010000000000000004 /* LawnStore.swift in Sources */,
 				5B0000010000000000000005 /* LogModels.swift in Sources */,
+				5B0000010000000000000011 /* UserLawnProfile.swift in Sources */,
+				5B0000010000000000000012 /* WeatherModels.swift in Sources */,
 				5B0000010000000000000006 /* LawnAdvisor.swift in Sources */,
+				5B0000010000000000000014 /* LocationProvider.swift in Sources */,
 				5B0000010000000000000007 /* SampleData.swift in Sources */,
+				5B0000010000000000000013 /* WeatherService.swift in Sources */,
 				5B0000010000000000000008 /* DashboardView.swift in Sources */,
+				5B0000010000000000000015 /* LawnIntelligenceView.swift in Sources */,
 				5B0000010000000000000009 /* PlantInventoryView.swift in Sources */,
 				5B000001000000000000000A /* RainfallLogView.swift in Sources */,
 				5B000001000000000000000B /* SeasonalPlanView.swift in Sources */,
@@ -345,6 +365,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Bushkill Lawn Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bushkill Lawn Tracker uses your approximate location to estimate local rainfall, forecast, and lawn watering needs.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -378,6 +399,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Bushkill Lawn Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.lifestyle";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Bushkill Lawn Tracker uses your approximate location to estimate local rainfall, forecast, and lawn watering needs.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

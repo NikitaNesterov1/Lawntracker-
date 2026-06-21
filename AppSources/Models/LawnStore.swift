@@ -7,6 +7,14 @@ final class LawnStore: ObservableObject {
         didSet { save() }
     }
 
+    @Published var userProfile: UserLawnProfile {
+        didSet { save() }
+    }
+
+    @Published var weatherSnapshot: LawnWeatherSnapshot? {
+        didSet { save() }
+    }
+
     @Published var rainfallEntries: [RainfallEntry] {
         didSet { save() }
     }
@@ -33,6 +41,8 @@ final class LawnStore: ObservableObject {
         if let data = UserDefaults.standard.data(forKey: storageKey),
            let snapshot = try? JSONDecoder.lawnDecoder.decode(LawnStoreSnapshot.self, from: data) {
             self.profile = snapshot.profile
+            self.userProfile = snapshot.userProfile ?? .bushkillSample
+            self.weatherSnapshot = snapshot.weatherSnapshot
             self.rainfallEntries = snapshot.rainfallEntries
             self.wateringEntries = snapshot.wateringEntries
             self.workEntries = snapshot.workEntries
@@ -40,6 +50,8 @@ final class LawnStore: ObservableObject {
             self.seasonalTasks = snapshot.seasonalTasks
         } else {
             self.profile = .bushkill
+            self.userProfile = .bushkillSample
+            self.weatherSnapshot = nil
             self.rainfallEntries = SampleData.rainfallEntries
             self.wateringEntries = SampleData.wateringEntries
             self.workEntries = SampleData.workEntries
@@ -50,6 +62,8 @@ final class LawnStore: ObservableObject {
 
     func resetToSampleData() {
         profile = .bushkill
+        userProfile = .bushkillSample
+        weatherSnapshot = nil
         rainfallEntries = SampleData.rainfallEntries
         wateringEntries = SampleData.wateringEntries
         workEntries = SampleData.workEntries
@@ -84,6 +98,8 @@ final class LawnStore: ObservableObject {
     private func save() {
         let snapshot = LawnStoreSnapshot(
             profile: profile,
+            userProfile: userProfile,
+            weatherSnapshot: weatherSnapshot,
             rainfallEntries: rainfallEntries,
             wateringEntries: wateringEntries,
             workEntries: workEntries,
@@ -98,6 +114,8 @@ final class LawnStore: ObservableObject {
 
 private struct LawnStoreSnapshot: Codable {
     var profile: LawnProfile
+    var userProfile: UserLawnProfile?
+    var weatherSnapshot: LawnWeatherSnapshot?
     var rainfallEntries: [RainfallEntry]
     var wateringEntries: [WateringEntry]
     var workEntries: [WorkEntry]
