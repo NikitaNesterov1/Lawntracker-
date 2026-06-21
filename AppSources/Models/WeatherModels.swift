@@ -104,14 +104,14 @@ struct LocationSearchResult: Identifiable, Codable, Equatable {
 
     var displayName: String {
         [name, admin1, countryCode].compactMap { value in
-            guard let value, !value.isEmpty else { return nil }
+            guard let value = value, !value.isEmpty else { return nil }
             return value
         }
         .joined(separator: ", ")
     }
 
     var elevationFeet: Int? {
-        guard let elevationMeters else { return nil }
+        guard let elevationMeters = elevationMeters else { return nil }
         return Int((elevationMeters * 3.28084).rounded())
     }
 }

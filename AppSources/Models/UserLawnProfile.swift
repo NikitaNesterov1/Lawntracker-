@@ -134,7 +134,7 @@ struct UserLawnProfile: Codable, Equatable {
     }
 
     var coordinateSummary: String {
-        guard let latitude, let longitude else {
+        guard let latitude = latitude, let longitude = longitude else {
             return "No coordinates saved"
         }
         return String(format: "%.4f, %.4f", latitude, longitude)

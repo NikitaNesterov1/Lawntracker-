@@ -130,9 +130,9 @@ struct WeatherService {
     }
 
     private func currentWeather(from current: OpenMeteoCurrentWeather?) -> CurrentLawnWeather? {
-        guard let current else { return nil }
+        guard let current = current else { return nil }
         return CurrentLawnWeather(
-            observedAt: current.time.flatMap(Self.dayAndMinuteFormatter.date(from:)),
+            observedAt: current.time.flatMap { Self.dayAndMinuteFormatter.date(from: $0) },
             temperatureF: current.temperature_2m,
             humidityPercent: current.relative_humidity_2m,
             precipitationInches: current.precipitation,
@@ -143,7 +143,7 @@ struct WeatherService {
     }
 
     private func dailyWeatherRows(from daily: OpenMeteoDailyWeather?, timeZone: TimeZone) -> [DailyLawnWeather] {
-        guard let daily else { return [] }
+        guard let daily = daily else { return [] }
         let formatter = Self.dayFormatter(timeZone: timeZone)
         return daily.time.enumerated().compactMap { index, dayString in
             guard let date = formatter.date(from: dayString) else { return nil }

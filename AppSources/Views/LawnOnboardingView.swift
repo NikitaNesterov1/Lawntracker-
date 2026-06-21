@@ -128,7 +128,7 @@ struct LawnOnboardingView: View {
                     .foregroundStyle(.red)
             }
 
-            if let statusMessage {
+            if let statusMessage = statusMessage {
                 Text(statusMessage)
                     .font(.caption)
                     .foregroundStyle(.secondary)

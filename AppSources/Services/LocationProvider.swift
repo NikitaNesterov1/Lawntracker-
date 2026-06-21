@@ -73,7 +73,7 @@ final class LocationProvider: NSObject, ObservableObject, CLLocationManagerDeleg
 
             let name = [locality, admin, postalCode]
                 .compactMap { value in
-                    guard let value, !value.isEmpty else { return nil }
+                    guard let value = value, !value.isEmpty else { return nil }
                     return value
                 }
                 .joined(separator: ", ")
