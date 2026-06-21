@@ -5,7 +5,7 @@ struct DashboardView: View {
 
     var recommendation: LawnRecommendation {
         let summary = store.rainfallSummary
-        LawnAdvisor.recommendation(
+        return LawnAdvisor.recommendation(
             sevenDayRainfall: summary.bestObservedRainfall,
             sevenDayWaterEquivalent: store.sevenDayWaterEquivalent,
             lastWatering: store.lastWatering
